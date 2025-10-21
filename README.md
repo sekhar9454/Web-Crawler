@@ -1,12 +1,12 @@
 # Web Crawler URL Tracker: Hash Set vs Bloom Filter
 
-## 📋 Project Information
+##  Project Information
 
 **Course:** Data Structures and Algorithms  
 **Roll Numbers:** 106124109, 106124019, 106124111  
 **Project Type:** Comparative Analysis & Interactive Visualization  
 
-## 🎯 Project Overview
+##  Project Overview
 
 This project demonstrates and compares two fundamental approaches for tracking visited URLs in a web crawler:
 
@@ -17,7 +17,7 @@ The application provides real-time visualization of memory usage, insertion spee
 
 ---
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Prerequisites
 
@@ -214,7 +214,7 @@ Visit the URL shown in terminal (usually `http://localhost:5173`)
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 ```
 web-crawler-tracker/
 ├── public/
@@ -231,7 +231,7 @@ web-crawler-tracker/
 
 ---
 
-## 🎮 How to Use the Application
+##  How to Use the Application
 
 ### Basic Operations
 
@@ -311,7 +311,7 @@ npm install lucide-react
 
 ---
 
-## 📊 Testing Scenarios
+##  Testing Scenarios
 
 ### Recommended Test Cases
 
@@ -334,7 +334,7 @@ npm install lucide-react
 
 ---
 
-## 🎓 Educational Value
+##  Educational Value
 
 ### Learning Objectives
 
@@ -365,7 +365,7 @@ Students will understand:
 
 ---
 
-## 📚 Technical Details
+##  Technical Details
 
 ### Hash Set Implementation
 - **Data Structure**: JavaScript Set object
@@ -391,7 +391,7 @@ m = size of bit array (1,000,000)
 
 ---
 
-## 🔬 Experiment Ideas
+##  Experiment Ideas
 
 ### Extensions and Modifications
 
@@ -415,7 +415,7 @@ m = size of bit array (1,000,000)
 
 ---
 
-## 📖 References and Resources
+##  References and Resources
 
 ### Documentation
 - [React Documentation](https://react.dev/)
@@ -431,7 +431,7 @@ m = size of bit array (1,000,000)
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 This is an academic project. If you'd like to enhance it:
 
@@ -443,13 +443,13 @@ This is an academic project. If you'd like to enhance it:
 
 ---
 
-## 📝 License
+##  License
 
 This project is created for educational purposes as part of a Data Structures course.
 
 ---
 
-## 👥 Team Members
+##  Team Members
 
 - Roll No: 106124109
 - Roll No: 106124019
@@ -457,7 +457,7 @@ This project is created for educational purposes as part of a Data Structures co
 
 ---
 
-## 📧 Support
+##  Support
 
 For issues or questions:
 1. Check the Troubleshooting section above
@@ -467,7 +467,7 @@ For issues or questions:
 
 ---
 
-## 🎉 Acknowledgments
+##  Acknowledgments
 
 - Course instructors for project guidance
 - React and Tailwind CSS communities

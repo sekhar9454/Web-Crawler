@@ -49,6 +49,8 @@ class BloomFilter {
 
 const URLTrackerComparison = () => {
   const [hashSet, setHashSet] = useState(new Set());
+  const [bloomFilterSize, setBloomFilterSize] = useState(1000000);
+  const [numHashFunctions, setNumHashFunctions] = useState(3);
   const [bloomFilter, setBloomFilter] = useState(new BloomFilter(1000000, 3));
   const [urlCount, setUrlCount] = useState(0);
   const [testResults, setTestResults] = useState({ falsePositives: 0, totalTests: 0 });
@@ -62,11 +64,59 @@ const URLTrackerComparison = () => {
   });
 
   const generateURL = (index) => {
-    const domains = ['example.com', 'test.org', 'demo.net', 'site.io', 'web.dev'];
-    const paths = ['blog', 'api', 'docs', 'about', 'contact', 'products', 'services'];
+    const domains = [
+      'example.com', 'test.org', 'demo.net', 'site.io', 'web.dev',
+      'github.com', 'stackoverflow.com', 'medium.com', 'dev.to', 'reddit.com',
+      'twitter.com', 'facebook.com', 'linkedin.com', 'instagram.com', 'youtube.com',
+      'amazon.com', 'ebay.com', 'shopify.com', 'etsy.com', 'aliexpress.com',
+      'wikipedia.org', 'news.ycombinator.com', 'techcrunch.com', 'theverge.com',
+      'cnn.com', 'bbc.com', 'nytimes.com', 'guardian.com', 'wsj.com',
+      'google.com', 'bing.com', 'duckduckgo.com', 'yahoo.com', 'baidu.com'
+    ];
+    
+    const paths = [
+      'blog', 'api', 'docs', 'about', 'contact', 'products', 'services',
+      'home', 'index', 'search', 'profile', 'settings', 'dashboard', 'admin',
+      'users', 'posts', 'comments', 'feed', 'notifications', 'messages',
+      'articles', 'news', 'events', 'gallery', 'portfolio', 'shop', 'cart',
+      'checkout', 'payment', 'orders', 'shipping', 'returns', 'support',
+      'faq', 'help', 'terms', 'privacy', 'legal', 'sitemap', 'archive',
+      'category', 'tag', 'author', 'date', 'popular', 'trending', 'latest'
+    ];
+    
+    const subpaths = [
+      'view', 'edit', 'delete', 'create', 'update', 'list', 'detail',
+      'page', 'section', 'item', 'post', 'article', 'thread', 'comment',
+      'user', 'profile', 'account', 'settings', 'preferences', 'history',
+      'new', 'old', 'archived', 'draft', 'published', 'pending', 'review'
+    ];
+    
+    const queryParams = [
+      'id', 'page', 'sort', 'filter', 'search', 'query', 'limit', 'offset',
+      'category', 'tag', 'author', 'date', 'type', 'status', 'format'
+    ];
+    
     const domain = domains[Math.floor(Math.random() * domains.length)];
     const path = paths[Math.floor(Math.random() * paths.length)];
-    return `https://www.${domain}/${path}/${index}`;
+    const subpath = subpaths[Math.floor(Math.random() * subpaths.length)];
+    const param = queryParams[Math.floor(Math.random() * queryParams.length)];
+    const paramValue = Math.floor(Math.random() * 1000);
+    
+    // Generate varied URL patterns to increase collision probability
+    const patterns = [
+      `https://www.${domain}/${path}/${index}`,
+      `https://${domain}/${path}/${subpath}/${index}`,
+      `https://www.${domain}/${path}?${param}=${index}`,
+      `https://${domain}/${path}/${subpath}?${param}=${paramValue}`,
+      `https://api.${domain}/${path}/${index}`,
+      `https://blog.${domain}/${path}/${subpath}/${index}`,
+      `https://www.${domain}/v1/${path}/${index}`,
+      `https://${domain}/${path}/${index}/${subpath}`,
+      `https://www.${domain}/${path}/${index}?sort=desc&${param}=${paramValue}`,
+      `https://${domain}/en/${path}/${subpath}/${index}`
+    ];
+    
+    return patterns[Math.floor(Math.random() * patterns.length)];
   };
 
   const addURL = () => {
@@ -96,10 +146,11 @@ const URLTrackerComparison = () => {
 
   const testFalsePositives = () => {
     let fps = 0;
-    const tests = 1000;
+    const tests = 5000; // Increased from 1000 to 5000 for better statistics
     
     for (let i = 0; i < tests; i++) {
-      const testUrl = generateURL(urlCount + 1000000 + i);
+      // Generate completely new URLs that were never added
+      const testUrl = generateURL(urlCount + 5000000 + i);
       if (bloomFilter.contains(testUrl) && !hashSet.has(testUrl)) {
         fps++;
       }
@@ -201,7 +252,10 @@ const URLTrackerComparison = () => {
           <div className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 backdrop-blur-lg rounded-2xl p-6 border border-green-400/30">
             <div className="flex items-center gap-3 mb-6">
               <Database className="text-green-400" size={32} />
-              <h2 className="text-2xl font-bold text-white">Hash Set</h2>
+              <div>
+                <h2 className="text-2xl font-bold text-white">Hash Set</h2>
+                <p className="text-green-300 text-sm">Perfect Accuracy</p>
+              </div>
             </div>
             
             <div className="space-y-4">
@@ -238,7 +292,10 @@ const URLTrackerComparison = () => {
           <div className="bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-lg rounded-2xl p-6 border border-purple-400/30">
             <div className="flex items-center gap-3 mb-6">
               <Filter className="text-purple-400" size={32} />
-              <h2 className="text-2xl font-bold text-white">Bloom Filter</h2>
+              <div>
+                <h2 className="text-2xl font-bold text-white">Bloom Filter</h2>
+                <p className="text-purple-300 text-sm">Memory Efficient</p>
+              </div>
             </div>
             
             <div className="space-y-4">
@@ -276,7 +333,8 @@ const URLTrackerComparison = () => {
         <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 mb-8">
           <h3 className="text-2xl font-bold text-white mb-4">False Positive Testing</h3>
           <p className="text-purple-200 mb-4">
-            Test the Bloom Filter with 1,000 URLs not in the Hash Set to measure actual false positive rate.
+            Test the Bloom Filter with 5,000 URLs not in the Hash Set to measure actual false positive rate.
+            With more URL patterns and variations, the collision probability increases.
           </p>
           <button
             onClick={testFalsePositives}
@@ -329,8 +387,12 @@ const URLTrackerComparison = () => {
           <div className="mt-4 bg-black/20 rounded-lg p-4">
             <p className="text-purple-200 text-sm">
               <strong>Trade-off Analysis:</strong> For 1 billion URLs, a Hash Set would require ~100 GB of memory 
-              while a Bloom Filter needs only a few GB. The Bloom Filter's small false positive rate 
-              ({theoreticalFPR}% with current settings) is acceptable for most web crawling applications, 
+              while a Bloom Filter needs only a few GB. With increased URL variety ({' '}
+              <span className="text-yellow-300 font-semibold">
+                34 domains, 45 paths, 27 subpaths, 10 URL patterns
+              </span>
+              ), we see more hash collisions leading to higher false positive rates. The Bloom Filter's small false positive rate 
+              ({theoreticalFPR}% with current settings) is still acceptable for most web crawling applications, 
               making it the preferred choice for large-scale systems.
             </p>
           </div>

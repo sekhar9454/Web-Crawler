@@ -217,33 +217,33 @@ const URLTrackerComparison = () => {
   const optimalHashFunctions = Math.round((bloomFilterSize / Math.max(urlCount, 1)) * Math.log(2));
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4 sm:p-8">
       {/* Configuration Modal Overlay */}
       {showConfigModal && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-gradient-to-br from-slate-800 to-purple-900 rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border-2 border-purple-500/50">
+          <div className="bg-gradient-to-br from-slate-800 to-purple-900 rounded-2xl sm:rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border-2 border-purple-500/50">
             {/* Modal Header */}
-            <div className="bg-gradient-to-r from-purple-600 to-pink-600 p-6 rounded-t-3xl">
-              <h2 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
-                <Filter size={36} />
+            <div className="bg-gradient-to-r from-purple-600 to-pink-600 p-4 sm:p-6 rounded-t-2xl sm:rounded-t-3xl">
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2 flex items-center gap-3">
+                <Filter size={28} />
                 Configure Bloom Filter
               </h2>
-              <p className="text-purple-100">
+              <p className="text-purple-100 text-sm sm:text-base">
                 Adjust the parameters to see how they affect false positive rates
               </p>
             </div>
 
-            <div className="p-8 space-y-6">
+            <div className="p-4 sm:p-8 space-y-6">
               {/* Bit Array Size Configuration */}
-              <div className="bg-black/30 rounded-xl p-6 border border-purple-500/30">
-                <div className="flex items-center justify-between mb-4">
+              <div className="bg-black/30 rounded-xl p-4 sm:p-6 border border-purple-500/30">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-4">
                   <div>
-                    <h3 className="text-xl font-bold text-white mb-1">Bit Array Size (m)</h3>
-                    <p className="text-purple-300 text-sm">Larger size = Lower false positive rate, More memory</p>
+                    <h3 className="text-lg sm:text-xl font-bold text-white mb-1">Bit Array Size (m)</h3>
+                    <p className="text-purple-300 text-xs sm:text-sm">Larger size = Lower false positive rate, More memory</p>
                   </div>
                   <div className="text-right">
-                    <div className="text-3xl font-bold text-purple-300">{bloomFilterSize.toLocaleString()}</div>
-                    <div className="text-sm text-purple-400">bits</div>
+                    <div className="text-2xl sm:text-3xl font-bold text-purple-300">{bloomFilterSize.toLocaleString()}</div>
+                    <div className="text-xs sm:text-sm text-purple-400">bits</div>
                   </div>
                 </div>
                 
@@ -267,16 +267,16 @@ const URLTrackerComparison = () => {
                   <span>5M</span>
                 </div>
                 
-                <div className="mt-4 grid grid-cols-2 gap-4">
+                <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="bg-purple-900/40 rounded-lg p-3">
                     <div className="text-purple-300 text-xs mb-1">Memory Usage</div>
-                    <div className="text-white font-bold text-lg">
+                    <div className="text-white font-bold text-base sm:text-lg">
                       {(bloomFilterSize / 8 / 1024 / 1024).toFixed(6)} MB
                     </div>
                   </div>
                   <div className="bg-purple-900/40 rounded-lg p-3">
                     <div className="text-purple-300 text-xs mb-1">Efficiency</div>
-                    <div className="text-white font-bold text-lg">
+                    <div className="text-white font-bold text-base sm:text-lg">
                       {bloomFilterSize < 100000 ? '⭐ Very Low' : 
                        bloomFilterSize < 500000 ? '⭐⭐ Low' :
                        bloomFilterSize < 1000000 ? '⭐⭐⭐ Medium' :
@@ -287,15 +287,15 @@ const URLTrackerComparison = () => {
               </div>
 
               {/* Hash Functions Configuration */}
-              <div className="bg-black/30 rounded-xl p-6 border border-purple-500/30">
-                <div className="flex items-center justify-between mb-4">
+              <div className="bg-black/30 rounded-xl p-4 sm:p-6 border border-purple-500/30">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-4">
                   <div>
-                    <h3 className="text-xl font-bold text-white mb-1">Number of Hash Functions (k)</h3>
-                    <p className="text-purple-300 text-sm">Optimal k minimizes false positive rate for given m and n</p>
+                    <h3 className="text-lg sm:text-xl font-bold text-white mb-1">Number of Hash Functions (k)</h3>
+                    <p className="text-purple-300 text-xs sm:text-sm">Optimal k minimizes false positive rate for given m and n</p>
                   </div>
                   <div className="text-right">
-                    <div className="text-3xl font-bold text-purple-300">{numHashFunctions}</div>
-                    <div className="text-sm text-purple-400">functions</div>
+                    <div className="text-2xl sm:text-3xl font-bold text-purple-300">{numHashFunctions}</div>
+                    <div className="text-xs sm:text-sm text-purple-400">functions</div>
                   </div>
                 </div>
                 
@@ -322,7 +322,7 @@ const URLTrackerComparison = () => {
 
                 <div className="mt-4 bg-blue-900/40 rounded-lg p-3">
                   <div className="text-blue-300 text-xs mb-1">💡 Recommendation</div>
-                  <div className="text-white text-sm">
+                  <div className="text-white text-xs sm:text-sm">
                     For most cases, k=3 to k=5 provides good balance. 
                     Too few → higher FPR. Too many → slower insertions.
                   </div>
@@ -330,16 +330,16 @@ const URLTrackerComparison = () => {
               </div>
 
               {/* Expected Performance Preview */}
-              <div className="bg-gradient-to-r from-indigo-900/50 to-purple-900/50 rounded-xl p-6 border border-indigo-500/30">
-                <h3 className="text-xl font-bold text-white mb-4">📊 Expected Performance Preview</h3>
+              <div className="bg-gradient-to-r from-indigo-900/50 to-purple-900/50 rounded-xl p-4 sm:p-6 border border-indigo-500/30">
+                <h3 className="text-lg sm:text-xl font-bold text-white mb-4">📊 Expected Performance Preview</h3>
                 
-                <div className="grid md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {[100, 1000, 5000].map((urls) => (
                     <div key={urls} className="bg-black/40 rounded-lg p-4">
-                      <div className="text-purple-300 text-sm font-semibold mb-2">
+                      <div className="text-purple-300 text-xs sm:text-sm font-semibold mb-2">
                         After {urls.toLocaleString()} URLs
                       </div>
-                      <div className="text-xl font-bold text-white mb-1 font-mono">
+                      <div className="text-lg sm:text-xl font-bold text-white mb-1 font-mono">
                         {calculateExpectedFPR(bloomFilterSize, numHashFunctions, urls)}%
                       </div>
                       <div className="text-xs text-purple-400">Expected FPR</div>
@@ -355,9 +355,9 @@ const URLTrackerComparison = () => {
               </div>
 
               {/* Quick Presets */}
-              <div className="bg-black/30 rounded-xl p-6 border border-purple-500/30">
-                <h3 className="text-xl font-bold text-white mb-4">⚡ Quick Presets</h3>
-                <div className="grid md:grid-cols-3 gap-4">
+              <div className="bg-black/30 rounded-xl p-4 sm:p-6 border border-purple-500/30">
+                <h3 className="text-lg sm:text-xl font-bold text-white mb-4">⚡ Quick Presets</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <button
                     onClick={() => {
                       handleBloomFilterSizeChange(50000);
@@ -408,15 +408,15 @@ const URLTrackerComparison = () => {
               {/* Start Button */}
               <button
                 onClick={startSimulation}
-                className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white text-xl font-bold py-5 rounded-xl transition-all transform hover:scale-105 shadow-lg flex items-center justify-center gap-3"
+                className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white text-lg sm:text-xl font-bold py-4 sm:py-5 rounded-xl transition-all transform hover:scale-105 shadow-lg flex items-center justify-center gap-3"
               >
-                <Play size={28} />
+                <Play size={24} className="sm:w-7 sm:h-7" />
                 Start Simulation with These Settings
               </button>
 
               {/* Info Footer */}
               <div className="bg-blue-900/30 rounded-xl p-4 border border-blue-500/30">
-                <div className="text-blue-300 text-sm">
+                <div className="text-blue-300 text-xs sm:text-sm">
                   <strong>💡 Tip:</strong> Start with the "High FPR Demo" preset to clearly see false positives, 
                   then try "Low FPR Demo" to see how increasing the bit array size improves accuracy.
                 </div>
@@ -428,27 +428,27 @@ const URLTrackerComparison = () => {
 
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-5xl font-bold text-white mb-4 tracking-tight">
+        <div className="text-center mb-6 sm:mb-8">
+          <h1 className="text-3xl sm:text-5xl font-bold text-white mb-4 tracking-tight">
             Web Crawler URL Tracker
           </h1>
-          <p className="text-xl text-purple-200 mb-2">Hash Set vs Bloom Filter Comparison</p>
-          <p className="text-sm text-purple-300">Roll No: 106124109, 106124019, 106124111</p>
+          <p className="text-lg sm:text-xl text-purple-200 mb-2">Hash Set vs Bloom Filter Comparison</p>
+          <p className="text-xs sm:text-sm text-purple-300">Roll No: 106124109, 106124019, 106124111</p>
         </div>
 
         {/* Bloom Filter Configuration Panel */}
-        <div className="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 backdrop-blur-lg rounded-2xl p-6 mb-6 border border-indigo-400/30">
-          <h3 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-            <Filter className="text-purple-400" size={28} />
+        <div className="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 backdrop-blur-lg rounded-2xl p-4 sm:p-6 mb-6 border border-indigo-400/30">
+          <h3 className="text-xl sm:text-2xl font-bold text-white mb-4 flex items-center gap-2">
+            <Filter className="text-purple-400" size={24} className="sm:w-7 sm:h-7" />
             Bloom Filter Configuration
           </h3>
           
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Bit Array Size Control */}
             <div className="bg-black/20 rounded-lg p-4">
-              <div className="flex items-center justify-between mb-3">
-                <label className="text-white font-semibold text-lg">Bit Array Size (m)</label>
-                <span className="text-2xl font-bold text-purple-300">{bloomFilterSize.toLocaleString()}</span>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-3 gap-4">
+                <label className="text-white font-semibold text-base sm:text-lg">Bit Array Size (m)</label>
+                <span className="text-xl sm:text-2xl font-bold text-purple-300">{bloomFilterSize.toLocaleString()}</span>
               </div>
               <input
                 type="range"
@@ -476,9 +476,9 @@ const URLTrackerComparison = () => {
 
             {/* Hash Functions Control */}
             <div className="bg-black/20 rounded-lg p-4">
-              <div className="flex items-center justify-between mb-3">
-                <label className="text-white font-semibold text-lg">Hash Functions (k)</label>
-                <span className="text-2xl font-bold text-purple-300">{numHashFunctions}</span>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-3 gap-4">
+                <label className="text-white font-semibold text-base sm:text-lg">Hash Functions (k)</label>
+                <span className="text-xl sm:text-2xl font-bold text-purple-300">{numHashFunctions}</span>
               </div>
               <input
                 type="range"
@@ -508,7 +508,7 @@ const URLTrackerComparison = () => {
 
           {/* Quick Preset Buttons */}
           <div className="mt-4 pt-4 border-t border-white/10">
-            <p className="text-purple-200 text-sm mb-3">Quick Presets:</p>
+            <p className="text-purple-200 text-xs sm:text-sm mb-3">Quick Presets:</p>
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => {
@@ -516,7 +516,7 @@ const URLTrackerComparison = () => {
                   handleNumHashFunctionsChange(2);
                 }}
                 disabled={isRunning || urlCount > 0}
-                className="px-4 py-2 bg-red-500/30 hover:bg-red-500/50 text-white rounded-lg text-sm font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed border border-red-400/30"
+                className="px-3 py-2 sm:px-4 sm:py-2 bg-red-500/30 hover:bg-red-500/50 text-white rounded-lg text-xs sm:text-sm font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed border border-red-400/30"
               >
                 High FPR (50K, k=2)
               </button>
@@ -526,7 +526,7 @@ const URLTrackerComparison = () => {
                   handleNumHashFunctionsChange(3);
                 }}
                 disabled={isRunning || urlCount > 0}
-                className="px-4 py-2 bg-yellow-500/30 hover:bg-yellow-500/50 text-white rounded-lg text-sm font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed border border-yellow-400/30"
+                className="px-3 py-2 sm:px-4 sm:py-2 bg-yellow-500/30 hover:bg-yellow-500/50 text-white rounded-lg text-xs sm:text-sm font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed border border-yellow-400/30"
               >
                 Medium FPR (500K, k=3)
               </button>
@@ -536,7 +536,7 @@ const URLTrackerComparison = () => {
                   handleNumHashFunctionsChange(5);
                 }}
                 disabled={isRunning || urlCount > 0}
-                className="px-4 py-2 bg-green-500/30 hover:bg-green-500/50 text-white rounded-lg text-sm font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed border border-green-400/30"
+                className="px-3 py-2 sm:px-4 sm:py-2 bg-green-500/30 hover:bg-green-500/50 text-white rounded-lg text-xs sm:text-sm font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed border border-green-400/30"
               >
                 Low FPR (2M, k=5)
               </button>
@@ -545,13 +545,13 @@ const URLTrackerComparison = () => {
         </div>
 
         {/* Control Panel */}
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 mb-8 border border-white/20">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex gap-3">
+        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-4 sm:p-6 mb-8 border border-white/20">
+          <div className="flex flex-col sm:flex-row flex-wrap items-center justify-between gap-4">
+            <div className="flex flex-wrap gap-3 justify-center sm:justify-start w-full sm:w-auto">
               <button
                 onClick={() => setIsRunning(!isRunning)}
                 disabled={urlCount >= 10000}
-                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg font-semibold hover:from-purple-600 hover:to-pink-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+                className="flex items-center gap-2 px-4 sm:px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg font-semibold hover:from-purple-600 hover:to-pink-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
               >
                 {isRunning ? <Pause size={20} /> : <Play size={20} />}
                 {isRunning ? 'Pause' : 'Start'} Simulation
@@ -559,38 +559,38 @@ const URLTrackerComparison = () => {
               <button
                 onClick={addURL}
                 disabled={isRunning}
-                className="flex items-center gap-2 px-6 py-3 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+                className="flex items-center gap-2 px-4 sm:px-6 py-3 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
               >
                 Add Single URL
               </button>
               <button
                 onClick={reset}
-                className="flex items-center gap-2 px-6 py-3 bg-red-500 text-white rounded-lg font-semibold hover:bg-red-600 transition-all shadow-lg"
+                className="flex items-center gap-2 px-4 sm:px-6 py-3 bg-red-500 text-white rounded-lg font-semibold hover:bg-red-600 transition-all shadow-lg"
               >
                 <RotateCcw size={20} />
                 Reset & Reconfigure
               </button>
             </div>
-            <div className="flex items-center gap-4">
-              <label className="text-white font-semibold">Speed:</label>
+            <div className="flex items-center gap-4 w-full sm:w-auto justify-center sm:justify-end">
+              <label className="text-white font-semibold text-sm sm:text-base">Speed:</label>
               <input
                 type="range"
                 min="1"
                 max="100"
                 value={speed}
                 onChange={(e) => setSpeed(Number(e.target.value))}
-                className="w-32"
+                className="w-full sm:w-32 flex-1 sm:flex-none"
               />
             </div>
           </div>
           
           <div className="mt-4 text-center">
-            <div className="text-4xl font-bold text-white mb-2">{urlCount.toLocaleString()}</div>
-            <div className="text-purple-200">URLs Processed</div>
+            <div className="text-3xl sm:text-4xl font-bold text-white mb-2">{urlCount.toLocaleString()}</div>
+            <div className="text-purple-200 text-sm sm:text-base">URLs Processed</div>
           </div>
           
-                      <div className="mt-4 pt-4 border-t border-white/20">
-            <div className="text-center text-purple-200 text-sm">
+          <div className="mt-4 pt-4 border-t border-white/20">
+            <div className="text-center text-purple-200 text-xs sm:text-sm">
               <strong>Current Configuration:</strong> Bit Array = {bloomFilterSize.toLocaleString()} bits 
               ({(bloomFilterSize / 8 / 1024 / 1024).toFixed(6)} MB) | 
               Hash Functions = {numHashFunctions}
@@ -599,85 +599,85 @@ const URLTrackerComparison = () => {
         </div>
 
         {/* Comparison Cards */}
-        <div className="grid md:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {/* Hash Set Card */}
-          <div className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 backdrop-blur-lg rounded-2xl p-6 border border-green-400/30">
+          <div className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 backdrop-blur-lg rounded-2xl p-4 sm:p-6 border border-green-400/30">
             <div className="flex items-center gap-3 mb-6">
-              <Database className="text-green-400" size={32} />
+              <Database className="text-green-400" size={28} className="sm:w-8 sm:h-8" />
               <div>
-                <h2 className="text-2xl font-bold text-white">Hash Set</h2>
-                <p className="text-green-300 text-sm">Perfect Accuracy</p>
+                <h2 className="text-xl sm:text-2xl font-bold text-white">Hash Set</h2>
+                <p className="text-green-300 text-xs sm:text-sm">Perfect Accuracy</p>
               </div>
             </div>
             
             <div className="space-y-4">
               <div className="bg-black/20 rounded-lg p-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <HardDrive className="text-green-300" size={20} />
-                  <span className="text-green-200 font-semibold">Memory Usage</span>
+                  <HardDrive className="text-green-300" size={18} className="sm:w-5 sm:h-5" />
+                  <span className="text-green-200 font-semibold text-sm sm:text-base">Memory Usage</span>
                 </div>
-                <div className="text-3xl font-bold text-white font-mono">{metrics.hashSetMemory} MB</div>
-                <div className="text-sm text-green-300 mt-1">~100 bytes per URL</div>
+                <div className="text-2xl sm:text-3xl font-bold text-white font-mono">{metrics.hashSetMemory} MB</div>
+                <div className="text-xs sm:text-sm text-green-300 mt-1">~100 bytes per URL</div>
               </div>
               
               <div className="bg-black/20 rounded-lg p-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <Clock className="text-green-300" size={20} />
-                  <span className="text-green-200 font-semibold">Insertion Time</span>
+                  <Clock className="text-green-300" size={18} className="sm:w-5 sm:h-5" />
+                  <span className="text-green-200 font-semibold text-sm sm:text-base">Insertion Time</span>
                 </div>
-                <div className="text-3xl font-bold text-white font-mono">{metrics.hashSetTime} ms</div>
-                <div className="text-sm text-green-300 mt-1">O(1) average complexity</div>
+                <div className="text-2xl sm:text-3xl font-bold text-white font-mono">{metrics.hashSetTime} ms</div>
+                <div className="text-xs sm:text-sm text-green-300 mt-1">O(1) average complexity</div>
               </div>
               
               <div className="bg-black/20 rounded-lg p-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <CheckCircle className="text-green-300" size={20} />
-                  <span className="text-green-200 font-semibold">Accuracy</span>
+                  <CheckCircle className="text-green-300" size={18} className="sm:w-5 sm:h-5" />
+                  <span className="text-green-200 font-semibold text-sm sm:text-base">Accuracy</span>
                 </div>
-                <div className="text-3xl font-bold text-white">100%</div>
-                <div className="text-sm text-green-300 mt-1">No false positives</div>
+                <div className="text-2xl sm:text-3xl font-bold text-white">100%</div>
+                <div className="text-xs sm:text-sm text-green-300 mt-1">No false positives</div>
               </div>
             </div>
           </div>
 
           {/* Bloom Filter Card */}
-          <div className="bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-lg rounded-2xl p-6 border border-purple-400/30">
+          <div className="bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-lg rounded-2xl p-4 sm:p-6 border border-purple-400/30">
             <div className="flex items-center gap-3 mb-6">
-              <Filter className="text-purple-400" size={32} />
+              <Filter className="text-purple-400" size={28} className="sm:w-8 sm:h-8" />
               <div>
-                <h2 className="text-2xl font-bold text-white">Bloom Filter</h2>
-                <p className="text-purple-300 text-sm">Memory Efficient</p>
+                <h2 className="text-xl sm:text-2xl font-bold text-white">Bloom Filter</h2>
+                <p className="text-purple-300 text-xs sm:text-sm">Memory Efficient</p>
               </div>
             </div>
             
             <div className="space-y-4">
               <div className="bg-black/20 rounded-lg p-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <HardDrive className="text-purple-300" size={20} />
-                  <span className="text-purple-200 font-semibold">Memory Usage</span>
+                  <HardDrive className="text-purple-300" size={18} className="sm:w-5 sm:h-5" />
+                  <span className="text-purple-200 font-semibold text-sm sm:text-base">Memory Usage</span>
                 </div>
-                <div className="text-3xl font-bold text-white font-mono">{metrics.bloomFilterMemory} MB</div>
-                <div className="text-sm text-purple-300 mt-1">
+                <div className="text-2xl sm:text-3xl font-bold text-white font-mono">{metrics.bloomFilterMemory} MB</div>
+                <div className="text-xs sm:text-sm text-purple-300 mt-1">
                   {bloomFilterSize.toLocaleString()} bits, {numHashFunctions} hash functions
                 </div>
               </div>
               
               <div className="bg-black/20 rounded-lg p-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <Clock className="text-purple-300" size={20} />
-                  <span className="text-purple-200 font-semibold">Insertion Time</span>
+                  <Clock className="text-purple-300" size={18} className="sm:w-5 sm:h-5" />
+                  <span className="text-purple-200 font-semibold text-sm sm:text-base">Insertion Time</span>
                 </div>
-                <div className="text-3xl font-bold text-white font-mono">{metrics.bloomFilterTime} ms</div>
-                <div className="text-sm text-purple-300 mt-1">O(k) where k = hash functions</div>
+                <div className="text-2xl sm:text-3xl font-bold text-white font-mono">{metrics.bloomFilterTime} ms</div>
+                <div className="text-xs sm:text-sm text-purple-300 mt-1">O(k) where k = hash functions</div>
               </div>
               
               <div className="bg-black/20 rounded-lg p-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <XCircle className="text-purple-300" size={20} />
-                  <span className="text-purple-200 font-semibold">False Positive Rate</span>
+                  <XCircle className="text-purple-300" size={18} className="sm:w-5 sm:h-5" />
+                  <span className="text-purple-200 font-semibold text-sm sm:text-base">False Positive Rate</span>
                 </div>
-                <div className="text-3xl font-bold text-white font-mono">{theoreticalFPR}%</div>
-                <div className="text-sm text-purple-300 mt-1">
+                <div className="text-2xl sm:text-3xl font-bold text-white font-mono">{theoreticalFPR}%</div>
+                <div className="text-xs sm:text-sm text-purple-300 mt-1">
                   Theoretical (n={urlCount.toLocaleString()})
                 </div>
               </div>
@@ -686,53 +686,53 @@ const URLTrackerComparison = () => {
         </div>
 
         {/* False Positive Testing */}
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 mb-8">
-          <h3 className="text-2xl font-bold text-white mb-4">False Positive Testing</h3>
-          <p className="text-purple-200 mb-4">
+        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-4 sm:p-6 border border-white/20 mb-8">
+          <h3 className="text-xl sm:text-2xl font-bold text-white mb-4">False Positive Testing</h3>
+          <p className="text-purple-200 mb-4 text-sm sm:text-base">
             Test the Bloom Filter with 5,000 URLs not in the Hash Set to measure actual false positive rate.
             With more URL patterns and variations, the collision probability increases.
           </p>
           <button
             onClick={testFalsePositives}
             disabled={urlCount === 0}
-            className="px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg font-semibold hover:from-orange-600 hover:to-red-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+            className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg font-semibold hover:from-orange-600 hover:to-red-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
           >
             Run False Positive Test
           </button>
           
-                      {testResults.totalTests > 0 && (
-            <div className="mt-6 grid md:grid-cols-3 gap-4">
+          {testResults.totalTests > 0 && (
+            <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-black/20 rounded-lg p-4">
-                <div className="text-purple-200 text-sm mb-1">Tests Run</div>
-                <div className="text-2xl font-bold text-white font-mono">{testResults.totalTests.toLocaleString()}</div>
+                <div className="text-purple-200 text-xs sm:text-sm mb-1">Tests Run</div>
+                <div className="text-xl sm:text-2xl font-bold text-white font-mono">{testResults.totalTests.toLocaleString()}</div>
               </div>
               <div className="bg-black/20 rounded-lg p-4">
-                <div className="text-purple-200 text-sm mb-1">False Positives</div>
-                <div className="text-2xl font-bold text-white font-mono">{testResults.falsePositives.toLocaleString()}</div>
+                <div className="text-purple-200 text-xs sm:text-sm mb-1">False Positives</div>
+                <div className="text-xl sm:text-2xl font-bold text-white font-mono">{testResults.falsePositives.toLocaleString()}</div>
               </div>
               <div className="bg-black/20 rounded-lg p-4">
-                <div className="text-purple-200 text-sm mb-1">Actual FP Rate</div>
-                <div className="text-2xl font-bold text-white font-mono">{falsePositiveRate}%</div>
+                <div className="text-purple-200 text-xs sm:text-sm mb-1">Actual FP Rate</div>
+                <div className="text-xl sm:text-2xl font-bold text-white font-mono">{falsePositiveRate}%</div>
               </div>
             </div>
           )}
         </div>
 
         {/* Key Insights */}
-        <div className="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 backdrop-blur-lg rounded-2xl p-6 border border-indigo-400/30">
-          <h3 className="text-2xl font-bold text-white mb-4">Key Insights</h3>
-          <div className="grid md:grid-cols-2 gap-4 text-white">
+        <div className="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 backdrop-blur-lg rounded-2xl p-4 sm:p-6 border border-indigo-400/30">
+          <h3 className="text-xl sm:text-2xl font-bold text-white mb-4">Key Insights</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-white mb-4">
             <div className="bg-black/20 rounded-lg p-4">
-              <h4 className="font-bold text-green-400 mb-2">✓ Hash Set Advantages</h4>
-              <ul className="space-y-1 text-sm text-green-100">
+              <h4 className="font-bold text-green-400 mb-2 text-sm sm:text-base">✓ Hash Set Advantages</h4>
+              <ul className="space-y-1 text-xs sm:text-sm text-green-100">
                 <li>• Perfect accuracy (0% false positives)</li>
                 <li>• Simple implementation</li>
                 <li>• Fast O(1) lookups and insertions</li>
               </ul>
             </div>
             <div className="bg-black/20 rounded-lg p-4">
-              <h4 className="font-bold text-purple-400 mb-2">✓ Bloom Filter Advantages</h4>
-              <ul className="space-y-1 text-sm text-purple-100">
+              <h4 className="font-bold text-purple-400 mb-2 text-sm sm:text-base">✓ Bloom Filter Advantages</h4>
+              <ul className="space-y-1 text-xs sm:text-sm text-purple-100">
                 <li>• Extremely memory efficient</li>
                 <li>• Scalable to billions of URLs</li>
                 <li>• Tunable false positive rate</li>
@@ -742,8 +742,8 @@ const URLTrackerComparison = () => {
             </div>
           </div>
           
-          <div className="mt-4 bg-black/20 rounded-lg p-4">
-            <p className="text-purple-200 text-sm">
+          <div className="bg-black/20 rounded-lg p-4">
+            <p className="text-purple-200 text-xs sm:text-sm">
               <strong>Trade-off Analysis:</strong> For 1 billion URLs, a Hash Set would require ~100 GB of memory 
               while a Bloom Filter needs only a few GB. With increased URL variety ({' '}
               <span className="text-yellow-300 font-semibold">
@@ -751,7 +751,7 @@ const URLTrackerComparison = () => {
               </span>
               ), we see more hash collisions leading to higher false positive rates.
             </p>
-            <p className="text-purple-200 text-sm mt-2">
+            <p className="text-purple-200 text-xs sm:text-sm mt-2">
               <strong>Current Settings:</strong> m={bloomFilterSize.toLocaleString()}, k={numHashFunctions}, n={urlCount.toLocaleString()} → 
               FPR ≈ {theoreticalFPR}%. 
               <span className="text-yellow-300"> Decrease 'm' or increase 'n' to see FPR rise!</span>

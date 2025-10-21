@@ -3,13 +3,16 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+
   "scripts": {
     "dev": "vite",
     "build": "npm install && vite build",
-    "lint": "eslint .",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",  
     "preview": "vite preview"
-    
-  },
+  }
+  ,
+
+
   "dependencies": {
     "@tailwindcss/vite": "^4.1.15",
     "lucide-react": "^0.546.0",

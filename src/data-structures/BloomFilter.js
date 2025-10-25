@@ -6,6 +6,9 @@ class BloomFilter {
     this.itemCount = 0;
   }
 
+
+  // hash = hash*31 + charcode 
+  // this is a polynomial rolling hash with base 31
   hash(str, seed) {
     let hash = seed;
     for (let i = 0; i < str.length; i++) {
@@ -14,6 +17,8 @@ class BloomFilter {
     }
     return Math.abs(hash) % this.size;
   }
+
+
 
   add(url) {
     for (let i = 0; i < this.numHashes; i++) {

@@ -40,7 +40,7 @@ class CountMinSketch {
     return this.totalCount / this.width;
   }
 
-  getFalsePositiveRate() {
+  getCollisionProbability() {
     const collisionProb = 1 - Math.exp(-this.totalCount / this.width);
     return Math.pow(collisionProb, this.depth);
   }

@@ -9,6 +9,8 @@ class CuckooFilter {
     this.maxKicks = 500;
   }
 
+  // hash = hash * 31 + charcode
+  // polynomial rolling hash with base 31 // same as bloom filter
   hash(str, seed = 0) {
     let hash = seed;
     for (let i = 0; i < str.length; i++) {
@@ -18,6 +20,8 @@ class CuckooFilter {
     return Math.abs(hash);
   }
 
+  //we are using the same hash function but this time we are taking mod with 8 so that we will be left with 8 bit long fingerprint
+  // this return the number
   fingerprint(str) {
     return this.hash(str, 12345) % (1 << this.fingerprintSize);
   }
@@ -44,16 +48,22 @@ class CuckooFilter {
       return true;
     }
     
+    //select the any of two bucket to kick out any random element 
     let index = Math.random() < 0.5 ? h1 : h2;
     let currentFp = fp;
     
     for (let i = 0; i < this.maxKicks; i++) {
+      // for selection the random elem in the bucket 
       const randomIdx = Math.floor(Math.random() * this.bucketSize);
+
       const temp = this.buckets[index][randomIdx];
       this.buckets[index][randomIdx] = currentFp;
       currentFp = temp;
       
-      index = (index ^ this.hash(currentFp.toString())) % this.numBuckets;
+      // check the second bucket of the temporary  element if it is having space or not 
+
+      //n1 = 2 , let 3 as the hash value we got corrsponding to fingerprint , now for getting n2 , n2 = 2^3
+       index = (index ^ this.hash(currentFp.toString())) % this.numBuckets;
       
       if (this.buckets[index].length < this.bucketSize) {
         this.buckets[index].push(currentFp);
@@ -62,7 +72,8 @@ class CuckooFilter {
       }
     }
     
-    this.itemCount++;
+    // after failure , itemcount should not increase 
+    // this.itemCount++;
     return false;
   }
 
@@ -97,7 +108,11 @@ class CuckooFilter {
 
   getFalsePositiveRate() {
     const loadFactor = this.itemCount / (this.numBuckets * this.bucketSize);
-    return 1 / (1 << this.fingerprintSize) * loadFactor;
+    return (1 / (1 << this.fingerprintSize) )* loadFactor*2*this.bucketSize;
+  }
+
+  getLoadFactor(){
+    return this.itemCount / (this.numBuckets * this.bucketSize);
   }
 }
 

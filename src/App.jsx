@@ -42,41 +42,52 @@ const App = () => {
     hashSetMemory: 0,
     bloomFilterMemory: 0,
     cuckooFilterMemory: 0,
+    cuckooFilterLoadFactor:0,
     countMinSketchMemory: 0
   });
 
-  const generateURL = (index) => {
-    const domains = [
-      'example.com', 'test.org', 'demo.net', 'site.io', 'web.dev',
-      'github.com', 'stackoverflow.com', 'medium.com', 'dev.to', 'reddit.com',
-      'twitter.com', 'facebook.com', 'linkedin.com', 'instagram.com', 'youtube.com',
-      'amazon.com', 'ebay.com', 'shopify.com', 'etsy.com', 'aliexpress.com',
-      'wikipedia.org', 'news.ycombinator.com', 'techcrunch.com', 'theverge.com',
-      'cnn.com', 'bbc.com', 'nytimes.com', 'guardian.com', 'wsj.com',
-      'google.com', 'bing.com', 'duckduckgo.com', 'yahoo.com', 'baidu.com'
-    ];
-    
-    const paths = [
-      'blog', 'api', 'docs', 'about', 'contact', 'products', 'services',
-      'home', 'index', 'search', 'profile', 'settings', 'dashboard', 'admin',
-      'users', 'posts', 'comments', 'feed', 'notifications', 'messages',
-      'articles', 'news', 'events', 'gallery', 'portfolio', 'shop', 'cart',
-      'checkout', 'payment', 'orders', 'shipping', 'returns', 'support',
-      'faq', 'help', 'terms', 'privacy', 'legal', 'sitemap', 'archive',
-      'category', 'tag', 'author', 'date', 'popular', 'trending', 'latest'
-    ];
-    
-    const domain = domains[Math.floor(Math.random() * domains.length)];
-    const path = paths[Math.floor(Math.random() * paths.length)];
-    
-    const patterns = [
-      `https://www.${domain}/${path}/${index}`,
-      `https://${domain}/${path}?id=${index}`,
-      `https://api.${domain}/${path}/${index}`,
-    ];
-    
-    return patterns[Math.floor(Math.random() * patterns.length)];
-  };
+
+  // 2 protocols × 6 subdomains × 34 domains × 46 paths × 2 (extra path or not) × 2 (extra query or not) = 305,184
+const generateURL = (index) => {
+  const domains = [
+    'example.com', 'test.org', 'demo.net', 'site.io', 'web.dev',
+    'github.com', 'stackoverflow.com', 'medium.com', 'dev.to', 'reddit.com',
+    'twitter.com', 'facebook.com', 'linkedin.com', 'instagram.com', 'youtube.com',
+    'amazon.com', 'ebay.com', 'shopify.com', 'etsy.com', 'aliexpress.com',
+    'wikipedia.org', 'news.ycombinator.com', 'techcrunch.com', 'theverge.com',
+    'cnn.com', 'bbc.com', 'nytimes.com', 'guardian.com', 'wsj.com',
+    'google.com', 'bing.com', 'duckduckgo.com', 'yahoo.com', 'baidu.com',
+  ];
+
+  const paths = [
+    'blog', 'api', 'docs', 'about', 'contact', 'products', 'services',
+    'home', 'index', 'search', 'profile', 'settings', 'dashboard', 'admin',
+    'users', 'posts', 'comments', 'feed', 'notifications', 'messages',
+    'articles', 'news', 'events', 'gallery', 'portfolio', 'shop', 'cart',
+    'checkout', 'payment', 'orders', 'shipping', 'returns', 'support',
+    'faq', 'help', 'terms', 'privacy', 'legal', 'sitemap', 'archive',
+    'category', 'tag', 'author', 'date', 'popular', 'trending', 'latest',
+  ];
+
+  const subdomains = ['', 'www', 'api', 'app', 'blog', 'shop'];
+  const protocols = ['https', 'http'];
+
+  
+  const protocol = protocols[Math.floor(Math.random() * protocols.length)];
+  const subdomain = subdomains[Math.floor(Math.random() * subdomains.length)];
+  const domain = domains[Math.floor(Math.random() * domains.length)];
+  const path = paths[Math.floor(Math.random() * paths.length)];
+
+
+  const extraPath = Math.random() > 0.5 ? `/${paths[Math.floor(Math.random() * paths.length)]}` : '';
+
+  
+  const query = Math.random() > 0.5 ? `?id=${index}&rand=${Math.floor(Math.random() * 10000)}` : `?id=${index}`;
+
+  
+  const subdomainPart = subdomain ? `${subdomain}.` : '';
+  return `${protocol}://${subdomainPart}${domain}/${path}${extraPath}${query}`;
+};
 
   const addURL = () => {
     const url = generateURL(urlCount);
@@ -109,6 +120,7 @@ const App = () => {
       hashSetMemory: (newHashSet.size * 100 / 1024 / 1024).toFixed(6),
       bloomFilterMemory: bloomFilter.getMemoryUsage().toFixed(6),
       cuckooFilterMemory: cuckooFilter.getMemoryUsage().toFixed(6),
+      cuckooFilterLoadFactor: cuckooFilter.getLoadFactor().toFixed(6),
       countMinSketchMemory: countMinSketch.getMemoryUsage().toFixed(6)
     });
   };
@@ -157,7 +169,9 @@ const App = () => {
       hashSetMemory: 0,
       bloomFilterMemory: 0,
       cuckooFilterMemory: 0,
+      cuckooFilterLoadFactor:0,
       countMinSketchMemory: 0
+
     });
   };
 
@@ -178,7 +192,8 @@ const App = () => {
   const cmsFPR = (testResults.cmsFP / testResults.totalTests * 100).toFixed(6);
   const theoreticalBloomFPR = (bloomFilter.getFalsePositiveRate() * 100).toFixed(6);
   const theoreticalCuckooFPR = (cuckooFilter.getFalsePositiveRate() * 100).toFixed(6);
-  const theoreticalCountMinFPR = (countMinSketch.getFalsePositiveRate() * 100).toFixed(6);
+  const theoreticalCountMinFPR = (countMinSketch.getCollisionProbability() * 100).toFixed(6);
+  
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4 sm:p-8">

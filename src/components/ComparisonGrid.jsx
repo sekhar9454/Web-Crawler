@@ -85,6 +85,11 @@ const ComparisonGrid = ({ metrics, countMinSketch, theoreticalBloomFPR, theoreti
             <div className="text-orange-200 font-semibold text-sm mb-1">FPR (Theory)</div>
             <div className="text-2xl font-bold text-white font-mono">{theoreticalCuckooFPR}%</div>
           </div>
+
+          <div className="bg-black/20 rounded-lg p-4">
+            <div className="text-orange-200 font-semibold text-sm mb-1">Load Factor </div>
+            <div className="text-2xl font-bold text-white font-mono">{metrics.cuckooFilterLoadFactor}</div>
+          </div>
         </div>
       </div>
 
@@ -116,7 +121,7 @@ const ComparisonGrid = ({ metrics, countMinSketch, theoreticalBloomFPR, theoreti
     </div>
     
     <div className="bg-black/20 rounded-lg p-4">
-      <div className="text-blue-200 font-semibold text-sm mb-1">FPR (Theory)</div>
+      <div className="text-blue-200 font-semibold text-sm mb-1">Collision Probability</div>
       <div className="text-2xl font-bold text-white font-mono">{theoreticalCountMinFPR}%</div>
     </div>
   </div>
